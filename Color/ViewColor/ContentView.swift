@@ -25,7 +25,10 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct Home : View {
+    @State private var isAnimated = false
+    @State private var animatedSearch = false
     
+    @State var showSheet = false
     @State var show = false
     @State var search = ""
     @State var gradients : [Gradient] = []
@@ -36,7 +39,7 @@ struct Home : View {
         
         ZStack {
          VStack{
-          HStack(spacing: 20){
+          HStack(spacing: 15){
                     
                     if show{
                         
@@ -64,7 +67,6 @@ struct Home : View {
                             }
                         
                         Button(action: {
-                            
                             withAnimation(.easeOut){
                                 
                                 // clearing search...
@@ -77,7 +79,11 @@ struct Home : View {
                         }) {
                             
                             Image(systemName: "xmark")
+                               
+                                .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(.black)
+                                .symbolEffect(.pulse)
+                                .padding(.trailing, 5)
                         }
                     }
               else {
@@ -87,6 +93,8 @@ struct Home : View {
                       .font(.custom("DenkOne-Regular",fixedSize: 50).weight(.black))
                       .font(.title)
                       .foregroundColor(.black)
+                      
+                  
                   Spacer()
                   
                   Button(action: {
@@ -98,9 +106,11 @@ struct Home : View {
                       Image(systemName: "magnifyingglass")
                           .font(.system(size: 20, weight: .bold))
                           .foregroundColor(.black)
+                          .symbolEffect(.pulse)
                   }
                   
                   Button(action: {
+                      isAnimated.toggle()
                       withAnimation(.easeOut){
                           
                           if columns.count == 1{
@@ -115,14 +125,16 @@ struct Home : View {
                       Image(systemName: columns.count == 1 ? "square.grid.2x2.fill" : "rectangle.grid.1x2.fill")
                           .font(.system(size: 20, weight: .bold))
                           .foregroundColor(.black)
+                          .symbolEffect(.bounce, value: isAnimated)
+                      
                   }
               }
           }
              
-          .padding(.top,30)
-          .padding(.bottom,10)
+          .padding(.top,20)
+          .padding(.bottom,5)
           .padding(.horizontal)
-          .zIndex(1)
+          .zIndex(11)
              
              // Vstack Bug..
              
@@ -138,17 +150,20 @@ struct Home : View {
              else {
      
                  ScrollView(.vertical, showsIndicators: false) {
-                     LazyVGrid(columns: columns,spacing: 15){
+                     LazyVGrid(columns: columns,spacing: 17){
                          
                          // assigning name as ID...
                          
                          ForEach(filtered,id: \.name){gradient in
-                             VStack(spacing: 15){
-                                 ZStack{
-                                     LinearGradient(gradient: .init(colors: HEXTORGB(colors: gradient.colors)), startPoint: .top, endPoint: .bottom)
-                                         .frame(height: 120)
-                                         .clipShape(CShape())
+                             VStack(spacing: 5) {
+                                 ZStack {
                                      
+                                     
+                                     
+                                     LinearGradient(gradient: .init(colors: HEXTORGB(colors: gradient.colors)), startPoint: .top, endPoint: .bottom)
+                                         .frame(height: 150)
+                                         .clipShape(CShape())
+                                         
                                      
                                      // context Menu...
                                      
@@ -166,13 +181,17 @@ struct Home : View {
                                                      
                                                      colorCode += color + "\n"
                                                  }
-                                                 
                                                  UIPasteboard.general.string = colorCode
                                                  
                                              }) {
-                                                 
+                                                 Image(systemName: "doc.on.doc.fill")
                                                  Text("Copy")
                                              }
+                                             
+                                         } preview: {
+                                             LinearGradient(gradient: .init(colors: HEXTORGB(colors: gradient.colors)), startPoint: .top, endPoint: .bottom)
+                                                 .frame(width: 400, height: 600)
+                                             
                                          }
                                      
                                      Text(gradient.name)
@@ -180,20 +199,20 @@ struct Home : View {
                                          .multilineTextAlignment(.center)
                                          .foregroundColor(.white)
                                          .padding(.horizontal)
-                                         .shadow(color: .black, radius: 1)
+                                         .shadow(color: .black, radius: 2)
                                  }
                                  
-                                 .scrollTransition(.animated.threshold(.visible(0.2))) { content, phase in
+                                 .scrollTransition(.animated.threshold(.visible(0.1))) { content, phase in
                                      
                                      content
                                          .opacity(phase.isIdentity ? 1.0 : 1.0)
                                          .scaleEffect(phase.isIdentity ? 1.0 : 0.1)
-                                         .rotation3DEffect(.radians(phase.value), axis: (4, 6, 1))
+                                         .rotation3DEffect(.radians(phase.value), axis: (43, 6, 1))
                                  }
                                  
-                                 if columns.count == 3{
+                                 if columns.count == 4{
                                      
-                                     HStack(spacing: 15){
+                                     HStack(spacing: 5){
                                          ForEach(gradient.colors,id: \.self){color in
                                              Text(color)
                                                  .fontWeight(.bold)
@@ -205,13 +224,13 @@ struct Home : View {
                          }
                      }
                      
-                     .padding(.top, 20)
+                     .padding(.top, 10)
                      .padding(.horizontal)
                      .padding(.bottom)
                      
                  }
                  
-                 .zIndex(0)
+                 .zIndex(5)
                  
              }
          }

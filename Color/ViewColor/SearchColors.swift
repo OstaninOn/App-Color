@@ -40,7 +40,8 @@ struct Home1: View {
                 if !self.show {
                     
                     Text("Color")
-                        .padding(.top, 19)
+                        .padding(.top, 12)
+                        .padding(.leading, 15)
                         .font(.custom("DenkOne-Regular",fixedSize: 50)
                         .weight(.black))
                         .font(.title)
@@ -49,19 +50,19 @@ struct Home1: View {
                 
                 Spacer(minLength: 0)
                 
-                HStack {
+                HStack (spacing: 10){
                     
                     if self.show {
-                        Label("", systemImage: "magnifyingglass")
-                            .font(.system(size: 20, weight: .bold))
+                        Label("", systemImage: "")
+                            .font(.system(size: 30, weight: .bold))
                             .foregroundColor(.black)
                         
                         TextField(" search color", text: self.$txt)
                             
                             
-                            .frame(width: 270, height: 40)
+                            .frame(width: 240, height: 35)
                             
-                            .font(Font.system(size: 30))
+                            .font(Font.system(size: 20))
                             
                             .foregroundColor(.black)
                             .background(.white)
@@ -75,9 +76,9 @@ struct Home1: View {
                             }
                             
                         }) {
-                            
+                            //Spacer()
                             Image(systemName: "xmark")
-                                .foregroundColor(.black)
+                                .foregroundColor(.indigiBG)
                                 .font(.system(size: 20, weight: .bold))
                             
                         }
@@ -93,22 +94,27 @@ struct Home1: View {
                         }) {
                             Label("", systemImage: "magnifyingglass")
                                 .font(.system(size: 20, weight: .bold))
-                                .foregroundColor(.black)
-                                .padding(.top, 15)
-                            
+                                .foregroundColor(.indigiBG)
+                                .padding(.top, 10)
+                                .padding(.bottom, 10)
+                                .padding(.leading, 10)
+                                .padding(.trailing, 3)
+                                
                         }
+                        
                     }
+                    
                 }
                 
-                .padding(self.show ? 12 : 6)
-                //.background(Color.white)
-                .cornerRadius(25)
+                .padding(self.show ? 15 : 1)
+                .background(Color.white)
+                .cornerRadius(30)
             }
             
             .padding(.top, 70)
-            .padding(.horizontal, 20)
-            .padding(.bottom, 10)
-
+            //.padding(.horizontal, 25)
+            .padding(.bottom, 5)
+            .padding(.trailing, 30)
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 10) {
                     
@@ -141,16 +147,16 @@ struct Home1: View {
                                 .scrollTransition(.animated.threshold(.visible(0.2))) { content, phase in
                                     
                                     content
-                                        .opacity(phase.isIdentity ? 1.0 : 1.0)
-                                        .scaleEffect(phase.isIdentity ? 1.0 : 0.1)
-                                        .rotation3DEffect(.radians(phase.value), axis: (4, 6, 1))
+                                        .opacity(phase.isIdentity ? 1.0 : 1.5)
+                                        .scaleEffect(phase.isIdentity ? 1.0 : 1.9)
+                                        .rotation3DEffect(.radians(phase.value), axis: (50, 1, 1))
                                 }
                         }
                     }
                 }
                 
-                .padding(.horizontal, 10)
-                .padding(.top, 10)
+                .padding(.horizontal, 15)
+                .padding(.top, 5)
                 
             }
         }
@@ -199,7 +205,7 @@ struct cellView: View {
                     Image(image)
                         .resizable()
                 })
-            
+                .padding(.bottom, 5)
             
       // ИМЯ ЦВЕТА
             
@@ -209,7 +215,7 @@ struct cellView: View {
                         .padding(.bottom, 80)
                         .font(
                             .custom("DenkOne-Regular",fixedSize: 30).weight(.black))
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        .font(.title)
                         .foregroundColor(.white)
                         .shadow(color: .black,  radius: 3)
             
