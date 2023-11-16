@@ -16,7 +16,7 @@ struct DowlandAnimate: View {
             Image("color")
                 .resizable()
                 //.scaledToFill()
-                //.edgesIgnoringSafeArea(.all)
+                .edgesIgnoringSafeArea(.all)
                 .scaleEffect(animate ? 4 : 1)
                 
                 .onAppear {
